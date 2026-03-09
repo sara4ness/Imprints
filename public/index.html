@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Imprints | Scavenger Hunt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Imprints</h1>
+            <p>Find the hidden creativity embedded in Tottenham Court Road. Tap a fragment to begin.</p>
+        </header>
+
+        <!-- Main Grid -->
+        <main class="grid-container" id="fragment-grid">
+            <!-- Fragments will be injected here by app.js -->
+        </main>
+
+        <!-- Fullscreen Modal for Capture -->
+        <div class="modal hidden" id="capture-modal">
+            <div class="modal-content">
+                <button class="close-btn" id="close-modal">&times;</button>
+                <div class="modal-image-container">
+                    <img src="" alt="Texture to find" id="modal-image">
+                </div>
+                <div class="modal-actions">
+                    <h2 id="modal-title">Fragment #01</h2>
+                    <p class="modal-instruction">Find this texture in the real world.</p>
+                    
+                    <label class="capture-btn" for="camera-input">
+                        <span class="icon">&#128247;</span> Capture Imprint
+                    </label>
+                    <input type="file" id="camera-input" accept="image/*" capture="environment" class="hidden-input">
+                </div>
+            </div>
+            
+            <!-- Scanning Overlay -->
+            <div class="scanning-overlay hidden" id="scanning-overlay">
+                <div class="scanner-line"></div>
+                <div class="scanning-text">Analyzing Imprint...</div>
+            </div>
+            
+            <!-- Success Overlay -->
+            <div class="success-overlay hidden" id="success-overlay">
+                <div class="success-icon">&#10003;</div>
+                <div class="success-text">Imprint Found!</div>
+                <p>You have uncovered a layer of the city's creativity.</p>
+                <button class="continue-btn" id="continue-btn">Continue Hunting</button>
+            </div>
+        </div>
+        
+        <!-- Progress Bar -->
+        <div class="progress-bar-container">
+            <div class="progress-stats">
+                <span>Fragments Found</span>
+                <span id="progress-text">0 / 16</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,332 @@
+:root {
+    /* Solid, premium dark color palette */
+    --bg-color: #0d0d0d;
+    --surface-color: #1a1a1a;
+    --surface-highlight: #262626;
+    --text-primary: #f0f0f0;
+    --text-secondary: #999999;
+    --accent: #d4af37; /* A subtle gold/bronze for "creative spark" */
+    --success: #4caf50;
+    --border-radius: 12px;
+    --transition-fast: 0.2s ease;
+    --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    user-select: none;
+}
+
+.app-container {
+    max-width: 600px; /* Constrain for larger screens, fills mobile */
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 80px; /* Space for progress bar */
+}
+
+/* Typography & Header */
+.header {
+    padding: 32px 24px 24px;
+    text-align: center;
+}
+
+h1 {
+    font-weight: 300;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.header p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 280px;
+    margin: 0 auto;
+}
+
+/* Grid Layout */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 0 24px 24px;
+}
+
+.fragment-card {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    background-color: var(--surface-color);
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    /* Solid borders instead of glassmorphism */
+    border: 1px solid #333; 
+}
+
+.fragment-card:active {
+    transform: scale(0.96);
+}
+
+.fragment-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(80%) contrast(1.2); /* Make them look hidden/mysterious initially */
+    transition: filter var(--transition-smooth);
+}
+
+/* Found State */
+.fragment-card.found .fragment-image {
+    filter: grayscale(0%) contrast(1); /* Reveal original colors */
+}
+
+.fragment-card.found::after {
+    content: '✓';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    background-color: var(--accent);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-color);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    transition: opacity var(--transition-smooth), transform var(--transition-smooth);
+}
+
+.modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+}
+
+.modal-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.close-btn {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: var(--surface-color);
+    border: 1px solid #333;
+    color: var(--text-primary);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.modal-image-container {
+    flex: 1;
+    width: 100%;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#modal-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-actions {
+    background-color: var(--surface-color);
+    padding: 32px 24px 48px;
+    border-top: 1px solid #333;
+    text-align: center;
+}
+
+#modal-title {
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}
+
+.modal-instruction {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+/* Buttons */
+.capture-btn, .continue-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent);
+    color: #000;
+    padding: 16px 32px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    width: 100%;
+    max-width: 300px;
+    cursor: pointer;
+    border: none;
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.capture-btn:active, .continue-btn:active {
+    transform: scale(0.98);
+}
+
+.icon {
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+.hidden-input {
+    display: none; /* Hide the actual file input */
+}
+
+/* Progress Bar */
+.progress-bar-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--bg-color);
+    padding: 16px 24px 24px;
+    border-top: 1px solid #222;
+    z-index: 50;
+}
+
+.progress-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+#progress-text {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.progress-track {
+    width: 100%;
+    height: 6px;
+    background-color: #222;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--accent);
+    width: 0%;
+    transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Overlays (Scanning / Success) */
+.scanning-overlay, .success-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(13, 13, 13, 0.95);
+    z-index: 101;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity var(--transition-fast);
+}
+
+.scanning-overlay.hidden, .success-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.scanner-line {
+    width: 80%;
+    height: 2px;
+    background-color: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    animation: scan 1.5s infinite ease-in-out alternate;
+    margin-bottom: 24px;
+}
+
+@keyframes scan {
+    0% { transform: translateY(-50px); }
+    100% { transform: translateY(50px); }
+}
+
+.scanning-text {
+    font-family: monospace;
+    color: var(--accent);
+    letter-spacing: 2px;
+    animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.success-icon {
+    font-size: 4rem;
+    color: var(--accent);
+    margin-bottom: 16px;
+}
+
+.success-text {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.success-overlay p {
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    text-align: center;
+    max-width: 250px;
+}
