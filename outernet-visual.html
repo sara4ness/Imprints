@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imprints | Outernet Map Visual</title>
+
+    <!-- Leaflet CSS for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: #000;
+        }
+
+        #map-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* Controls Overlay for the person operating the screen */
+        .controls {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px 40px;
+            border-radius: 40px;
+            display: flex;
+            gap: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            font-family: -apple-system, sans-serif;
+            transition: opacity 0.3s;
+        }
+
+        /* Hide controls when mouse is still (good for recordings) */
+        body.idle .controls {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        button {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background: #f0f0f0;
+        }
+
+        button.active {
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        /* The Custom Marker */
+        .custom-div-icon {
+            background: transparent;
+            border: none;
+        }
+
+        .marker-pin {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: transparent;
+            border: 3px solid #000;
+            /* Black ring for high contrast on light map */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        /* When toggled ON */
+        .show-points .marker-pin {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Map UI overrides for clean visual */
+        .leaflet-control-container {
+            display: none !important;
+        }
+
+        /* Hides zoom buttons & attribution */
+    </style>
+</head>
+
+<body>
+
+    <div id="map-container"></div>
+
+    <div class="controls">
+        <button id="btn-theme">Toggle Dark/Light Mode</button>
+        <button id="btn-points" class="active">Toggle Points On/Off</button>
+        <button id="btn-animate">Trigger Pulse Animation</button>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script>
+        // Data and Setup
+        const centerLat = 51.5160;
+        const centerLng = -0.1303;
+        const randomOffset = () => (Math.random() - 0.5) * 0.004;
+
+        // Generate 15 fake coordinates around the Outernet
+        const points = Array.from({ length: 15 }, () => ({
+            lat: centerLat + randomOffset(),
+            lng: centerLng + randomOffset()
+        }));
+
+        // Initialize Map
+        const map = L.map('map-container', {
+            zoomControl: false,      // Hide UI for cleanly capturing video
+            scrollWheelZoom: true,   // Allow scrolling if needed
+            doubleClickZoom: false
+        }).setView([centerLat, centerLng], 17); // Zoomed in close to Outernet
+
+        // Tile Layers
+        const lightModeUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+        const darkModeUrl = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+
+        let currentLayer = L.tileLayer(lightModeUrl, { maxZoom: 20 }).addTo(map);
+        let isDarkMode = false;
+        let pointsVisible = true;
+
+        const mapContainer = document.getElementById('map-container');
+
+        // Add Markers
+        const markers = [];
+        points.forEach(point => {
+            const customIcon = L.divIcon({
+                className: 'custom-div-icon',
+                html: `<div class="marker-pin"></div>`,
+                iconSize: [30, 30],
+                iconAnchor: [15, 15]
+            });
+            const marker = L.marker([point.lat, point.lng], { icon: customIcon }).addTo(map);
+            markers.push(marker);
+        });
+
+        // Initially show points
+        mapContainer.classList.add('show-points');
+
+        // --- INTERACTIVITY GROUPS ---
+
+        // 1. Theme Toggle (For Outernet Screens, you might want both variants)
+        document.getElementById('btn-theme').addEventListener('click', () => {
+            map.removeLayer(currentLayer);
+            isDarkMode = !isDarkMode;
+            currentLayer = L.tileLayer(isDarkMode ? darkModeUrl : lightModeUrl, { maxZoom: 20 }).addTo(map);
+
+            // Adjust marker colors based on theme
+            const pins = document.querySelectorAll('.marker-pin');
+            pins.forEach(pin => {
+                pin.style.borderColor = isDarkMode ? '#fff' : '#000';
+            });
+        });
+
+        // 2. Points Toggle (Fade markers in/out via CSS class)
+        const btnPoints = document.getElementById('btn-points');
+        btnPoints.addEventListener('click', () => {
+            pointsVisible = !pointsVisible;
+            if (pointsVisible) {
+                mapContainer.classList.add('show-points');
+                btnPoints.classList.add('active');
+            } else {
+                mapContainer.classList.remove('show-points');
+                btnPoints.classList.remove('active');
+            }
+        });
+
+        // 3. Pulse Animation (Makes pins pop one by one - great for video)
+        document.getElementById('btn-animate').addEventListener('click', async () => {
+            if (!pointsVisible) {
+                // Turn them on first if they are off
+                pointsVisible = true;
+                mapContainer.classList.add('show-points');
+                btnPoints.classList.add('active');
+                await new Promise(r => setTimeout(r, 600)); // wait for fade in
+            }
+
+            const pins = document.querySelectorAll('.marker-pin');
+            pins.forEach((pin, i) => {
+                setTimeout(() => {
+                    pin.style.transform = 'scale(2)';
+                    pin.style.backgroundColor = 'rgba(212, 175, 55, 0.8)'; // The Accent Gold
+                    setTimeout(() => {
+                        pin.style.transform = 'scale(1)';
+                        pin.style.backgroundColor = 'transparent';
+                    }, 400);
+                }, i * 150); // Stagger the animation 150ms apart
+            });
+        });
+
+        // Hide UI controls when mouse is idle (so you get a clean screen for recording)
+        let timeout;
+        document.addEventListener('mousemove', () => {
+            document.body.classList.remove('idle');
+            clearTimeout(timeout);
+            timeout = setTimeout(() => document.body.classList.add('idle'), 3000);
+        });
+    </script>
+</body>
+
+</html>
