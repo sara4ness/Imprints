@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 8, src: 'images/IMG_2242 2.jpg', clue: 'A textured architectural detail.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
         { id: 9, src: 'images/IMG_3168.jpg', clue: 'Stickers layered on a lamppost.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
         { id: 10, src: 'images/IMG_3187.jpg', clue: 'A bold slash of colorful paint.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 11, src: 'images/IMG_3201 (1).jpg', clue: 'A subtle engraving near the ground.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
         { id: 12, src: 'images/IMG_3221.jpg', clue: 'A peeling advertisement.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
         { id: 13, src: 'images/IMG_3223.jpg', clue: 'A mysterious stencil.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
         { id: 14, src: 'images/IMG_3228.jpg', clue: 'An intricate pattern etched in cement.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
