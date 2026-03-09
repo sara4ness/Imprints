@@ -34,9 +34,9 @@
             z-index: 1;
         }
 
-        /* Make the grey map specifically slightly darker without affecting the icons */
+        /* Make the map grayscale, slightly darker, and add a bit of contrast without affecting our custom colored icons */
         .leaflet-tile-pane {
-            filter: contrast(110%) brightness(0.9);
+            filter: grayscale(100%) contrast(110%) brightness(0.9);
         }
 
         /* Controls Overlay for the person operating the screen */
@@ -140,17 +140,32 @@
         const randomOffset = () => (Math.random() - 0.5) * 0.004;
 
         // Define Custom Colors Here!
-        // We can pass specific hex codes for every single point
-        const customColors = [
-            '#ff595e', '#ffca3a', '#8ac926', '#1982c4', '#6a4c93', // Vibrant pop
-            '#ff595e', '#ffca3a', '#8ac926', '#1982c4', '#6a4c93',
-            '#ff595e', '#ffca3a', '#8ac926', '#1982c4', '#6a4c93'
+        const dotColor = '#888888'; // Uniform gray for all dots
+        const customColors = Array(15).fill(dotColor);
+
+        // Specific coordinates matching the app
+        const coords = [
+            { lat: 51.51532, lng: -0.12946 }, // 2203
+            { lat: 51.51506, lng: -0.12881 }, // 2208
+            { lat: 51.51455, lng: -0.12965 }, // 2214
+            { lat: 51.51576, lng: -0.13055 }, // 2224
+            { lat: 51.51578, lng: -0.13029 }, // 2239
+            { lat: centerLat + randomOffset(), lng: centerLng + randomOffset() }, // 2240 (missing)
+            { lat: centerLat + randomOffset(), lng: centerLng + randomOffset() }, // 2241 (missing)
+            { lat: centerLat + randomOffset(), lng: centerLng + randomOffset() }, // 2242 (missing)
+            { lat: 51.51506, lng: -0.12881 }, // 3168
+            { lat: 51.51455, lng: -0.12965 }, // 3187
+            { lat: 51.51565, lng: -0.13380 }, // 3221
+            { lat: 51.51565, lng: -0.13380 }, // 3223
+            { lat: 51.51572, lng: -0.13384 }, // 3228
+            { lat: 51.51635, lng: -0.13056 }, // 3239
+            { lat: 51.51563, lng: -0.13099 }  // 3201
         ];
 
         // Generate 15 points with individual colors
-        const points = Array.from({ length: 15 }, (v, i) => ({
-            lat: centerLat + randomOffset(),
-            lng: centerLng + randomOffset(),
+        const points = coords.map((c, i) => ({
+            lat: c.lat,
+            lng: c.lng,
             color: customColors[i] // Assigning a color to each point
         }));
 
@@ -161,9 +176,9 @@
             doubleClickZoom: false
         }).setView([centerLat, centerLng], 17); // Zoomed in close to Outernet
 
-        // Tile Layers
-        const lightModeUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
-        const darkModeUrl = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+        // Tile Layers (Switched to CartoDB Light NoLabels - grayscale and avoids 401 Auth errors more reliably)
+        const lightModeUrl = 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png';
+        const darkModeUrl = 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png';
 
         // Add Attribution
         const cartoAttribution = '&copy; <a href="https://carto.com/attributions">CARTO</a>';

@@ -12,21 +12,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Array of the images
     const fragments = [
-        { id: 1, src: 'images/IMG_2203.jpg', clue: 'Look closely at the layered brickwork.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 2, src: 'images/IMG_2208.jpg', clue: 'Weathered words painted on stone.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 3, src: 'images/IMG_2214.jpg', clue: 'A vibrant burst of street art.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 4, src: 'images/IMG_2224.jpg', clue: 'Distressed posters overlapping in time.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 5, src: 'images/IMG_2239 2.jpg', clue: 'A hidden mark in the alleyway.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 6, src: 'images/IMG_2240 2.jpg', clue: 'A small tag on a rusted surface.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 7, src: 'images/IMG_2241 2.jpg', clue: 'Remnants of old Denmark Street.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 8, src: 'images/IMG_2242 2.jpg', clue: 'A textured architectural detail.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 9, src: 'images/IMG_3168.jpg', clue: 'Stickers layered on a lamppost.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 10, src: 'images/IMG_3187.jpg', clue: 'A bold slash of colorful paint.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 12, src: 'images/IMG_3221.jpg', clue: 'A peeling advertisement.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 13, src: 'images/IMG_3223.jpg', clue: 'A mysterious stencil.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 14, src: 'images/IMG_3228.jpg', clue: 'An intricate pattern etched in cement.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 15, src: 'images/IMG_3239 2.jpg', clue: 'A macro shot of weathered wood.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 16, src: 'images/IMG_3201.jpg', clue: 'A final piece of the urban puzzle.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() }
+        { id: 1, src: 'images/IMG_2203.jpg', clue: 'Look closely at the layered brickwork.', lat: 51.51532, lng: -0.12946 },
+        { id: 2, src: 'images/IMG_2208.jpg', clue: 'Weathered words painted on stone.', lat: 51.51506, lng: -0.12881 },
+        { id: 3, src: 'images/IMG_2214.jpg', clue: 'A vibrant burst of street art.', lat: 51.51455, lng: -0.12965 },
+        { id: 4, src: 'images/IMG_2224.jpg', clue: 'Distressed posters overlapping in time.', lat: 51.51576, lng: -0.13055 },
+        { id: 5, src: 'images/IMG_2239 2.jpg', clue: 'A hidden mark in the alleyway.', lat: 51.51578, lng: -0.13029 },
+        { id: 6, src: 'images/IMG_2240 2.jpg', clue: 'A small tag on a rusted surface.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() }, // Missing coords, using random
+        { id: 7, src: 'images/IMG_2241 2.jpg', clue: 'Remnants of old Denmark Street.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() }, // Missing coords, using random
+        { id: 8, src: 'images/IMG_2242 2.jpg', clue: 'A textured architectural detail.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() }, // Missing coords, using random
+        { id: 9, src: 'images/IMG_3168.jpg', clue: 'Stickers layered on a lamppost.', lat: 51.51506, lng: -0.12881 },
+        { id: 10, src: 'images/IMG_3187.jpg', clue: 'A bold slash of colorful paint.', lat: 51.51455, lng: -0.12965 },
+        { id: 12, src: 'images/IMG_3221.jpg', clue: 'A peeling advertisement.', lat: 51.51565, lng: -0.13380 },
+        { id: 13, src: 'images/IMG_3223.jpg', clue: 'A mysterious stencil.', lat: 51.51565, lng: -0.13380 },
+        { id: 14, src: 'images/IMG_3228.jpg', clue: 'An intricate pattern etched in cement.', lat: 51.51572, lng: -0.13384 },
+        { id: 15, src: 'images/IMG_3239 2.jpg', clue: 'A macro shot of weathered wood.', lat: 51.51635, lng: -0.13056 },
+        { id: 16, src: 'images/IMG_3201.jpg', clue: 'A final piece of the urban puzzle.', lat: 51.51563, lng: -0.13099 }
     ];
 
     // State
@@ -102,8 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Center on Outernet / Denmark St
         map = L.map('leaflet-map').setView([centerLat, centerLng], 16);
 
-        // Light mode map tiles (CartoDB Positron)
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        // Light mode map tiles (CartoDB Light NoLabels - grayscale and avoids 401 Auth errors more reliably)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>',
             subdomains: 'abcd',
             maxZoom: 20
