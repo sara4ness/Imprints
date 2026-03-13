@@ -112,12 +112,14 @@ document.addEventListener('DOMContentLoaded', () => {
         fragments.forEach((fragment) => {
             const isFound = foundFragments.includes(fragment.id);
 
-            // Create a custom div icon
+            // Create a custom div icon with star image
             const customIcon = L.divIcon({
                 className: 'custom-div-icon',
-                html: `<div class="marker-pin ${isFound ? 'found-pin' : ''}"></div>`,
-                iconSize: [30, 30],
-                iconAnchor: [15, 15]
+                html: `<div class="marker-star ${isFound ? 'found-star' : ''}">
+                        <img src="images/star.png" alt="Star Marker">
+                       </div>`,
+                iconSize: [32, 32],
+                iconAnchor: [16, 16]
             });
 
             const marker = L.marker([fragment.lat, fragment.lng], { icon: customIcon }).addTo(map);
@@ -311,8 +313,8 @@ document.addEventListener('DOMContentLoaded', () => {
         scanningOverlay.classList.remove('hidden');
 
         // Check distance one final time at the moment of capture
-        let isValid = debugToggle.checked;
-        if (!isValid && currentUserLat !== null) {
+        let isValid = true; // Always allow in exhibition mode
+        if (currentUserLat !== null && false) { // Skip distance check for exhibition
             const dist = calculateDistance(currentUserLat, currentUserLng, activeFragment.lat, activeFragment.lng);
             isValid = dist <= REQUIRED_DISTANCE_METERS;
         }
@@ -329,7 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Update map marker instantly
                     if (markers[activeFragment.id]) {
                         const iconHtml = markers[activeFragment.id].options.icon.options.html;
-                        markers[activeFragment.id].options.icon.options.html = iconHtml.replace('marker-pin', 'marker-pin found-pin');
+                        markers[activeFragment.id].options.icon.options.html = iconHtml.replace('marker-star', 'marker-star found-star');
                         markers[activeFragment.id].setIcon(markers[activeFragment.id].options.icon);
                     }
                 }
