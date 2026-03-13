@@ -46,16 +46,16 @@
         <!-- Capture Modal -->
         <div class="modal hidden" id="capture-modal">
             <div class="modal-content">
-                <button class="close-btn" id="close-modal">&times;</button>
+                <button class="close-btn" id="close-modal" aria-label="Close exhibition imprint">&times;</button>
                 <div class="modal-image-container">
                     <img src="" alt="Texture to find" id="modal-image">
                 </div>
                 <div class="modal-actions">
                     <h2 id="modal-title">Fragment #01</h2>
+                    <span id="modal-status-tag" class="status-tag"><img src="images/star.png" alt="" class="status-star">COLLECTED</span>
                     <p class="modal-distance" id="modal-distance">Distance: Checking Location...</p>
                     <p class="modal-instruction" id="modal-instruction">Navigate closer to the fragment's location to
                         unlock capture mode.</p>
-
                     <label class="capture-btn disabled" id="capture-label" for="camera-input">
                         <span id="capture-text">Too Far Away</span>
                     </label>
@@ -90,10 +90,10 @@
         </div>
 
         <!-- Progress Bar -->
-        <div class="progress-bar-container" role="progressbar" aria-label="Discovery Progress" aria-valuemin="0" aria-valuemax="40" id="progress-container">
+        <div class="progress-bar-container" role="progressbar" aria-label="Discovery Progress" aria-valuemin="0" aria-valuemax="39" id="progress-container">
             <div class="progress-stats">
                 <span>Fragments Found</span>
-                <span id="progress-text" aria-live="polite">0 / 40</span>
+                <span id="progress-text" aria-live="polite">0 / 39</span>
             </div>
             <div class="progress-track">
                 <div class="progress-fill" id="progress-fill"></div>

@@ -252,7 +252,14 @@ h3,
 
 /* Map Layout */
 #view-map {
-    padding: 0 24px 100px;
+    padding: 40px 24px 60px; /* Added top padding to balance distance from toggles */
+}
+
+@media (min-width: 800px) {
+    #view-map {
+        padding-top: 50px; /* More room on desktop */
+        padding-bottom: 50px; /* Symmetrical spacing */
+    }
 }
 
 #leaflet-map {
@@ -267,7 +274,8 @@ h3,
 
 @media (min-width: 800px) {
     #leaflet-map {
-        height: 60vh;
+        height: 60vh; /* Increased for better visual presence and symmetry */
+        min-height: 450px;
     }
 }
 
@@ -288,23 +296,31 @@ h3,
     display: flex;
     align-items: center;
     justify-content: center;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
 }
 
-.marker-star img {
+.star-asset {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
 }
 
 .marker-star.found-star {
-    filter: drop-shadow(0 0 12px #9c1742); /* Brand berry glow for found items */
     transform: scale(1.1);
 }
 
-.marker-star.found-star img {
-    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
-}
+/* Dynamic Glow for Found Markers (Matched to Star Assets) */
+.star-01.found-star .star-asset { filter: drop-shadow(0 0 10px #680026); } /* Maroon */
+.star-02.found-star .star-asset { filter: drop-shadow(0 0 10px #1e8ea2); } /* Teal */
+.star-03.found-star .star-asset { filter: drop-shadow(0 0 10px #fe8c7b); } /* Peach */
+.star-04.found-star .star-asset { filter: drop-shadow(0 0 10px #cae2e9); } /* Blue Soft */
+.star-05.found-star .star-asset { filter: drop-shadow(0 0 10px #f5c9ca); } /* Pink Soft */
+.star-06.found-star .star-asset { filter: drop-shadow(0 0 10px #ffffff); } /* Stone/White */
+.star-07.found-star .star-asset { filter: drop-shadow(0 0 10px #f9dc5c); } /* Gold */
+.star-08.found-star .star-asset { filter: drop-shadow(0 0 10px #d4145a); } /* Berry */
+.star-09.found-star .star-asset { filter: drop-shadow(0 0 10px #cae2e9); } /* Dual Blue */
+.star-10.found-star .star-asset { filter: drop-shadow(0 0 10px #f5c9ca); } /* Dual Pink */
+.star-11.found-star .star-asset { filter: drop-shadow(0 0 10px #f9dc5c); } /* Dual Yellow */
 
 .custom-div-icon:active .marker-star {
     transform: scale(0.9);
@@ -431,15 +447,63 @@ h3,
     --theme-btn-text: #000000;
 }
 
-.theme-1 #modal-title,
-.theme-2 #modal-title,
-.theme-5 #modal-title,
-.theme-8 #modal-title,
-.theme-1 .modal-instruction,
-.theme-2 .modal-instruction,
-.theme-5 .modal-instruction,
-.theme-8 .modal-instruction {
-    color: #ffffff;
+/* Found State Modal Refinement - Sharp Exhibition Style */
+.status-tag {
+    display: none; /* Hidden by default */
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #fff;
+    font-family: 'pelago', sans-serif; /* Sharp sans-serif */
+    font-size: 0.65rem;
+    font-weight: 500;
+    padding: 3px 12px;
+    border-radius: 0; /* Sharp corners */
+    text-transform: uppercase;
+    letter-spacing: 3px; /* Architecturally spaced */
+    margin-top: 4px;
+    margin-bottom: 12px;
+}
+
+.status-star {
+    width: 12px;
+    height: 12px;
+    object-fit: contain;
+}
+
+.modal-content.is-found .modal-distance,
+.modal-content.is-found .modal-instruction,
+.modal-content.is-found #capture-label {
+    display: none !important;
+}
+
+.modal-content.is-found #modal-status-tag {
+    display: inline-flex !important;
+}
+
+/* Theme-specific Sharp Labels & Icons */
+.theme-3 .status-tag,
+.theme-4 .status-tag,
+.theme-6 .status-tag,
+.theme-7 .status-tag {
+    color: #000;
+    border-color: rgba(0, 0, 0, 0.5);
+}
+
+.theme-3 .status-star,
+.theme-4 .status-star,
+.theme-6 .status-star,
+.theme-7 .status-star {
+    filter: invert(1); /* Flip white star to black */
+}
+
+.theme-1 .status-tag,
+.theme-2 .status-tag,
+.theme-5 .status-tag,
+.theme-8 .status-tag {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
 .theme-3 #modal-title,
@@ -462,25 +526,44 @@ h3,
     top: 24px;
     right: 24px;
     background: transparent;
-    /* Removed box */
     border: none;
-    /* Removed border */
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--theme-text); /* Enforce high-contrast theme color */
     width: 44px;
     height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 32px;
-    /* Slightly larger icon */
     cursor: pointer;
     z-index: 10;
     transition: all var(--transition-fast);
+    opacity: 0.8;
 }
 
 .close-btn:hover {
-    color: var(--white);
+    opacity: 1;
     transform: scale(1.1);
+}
+
+.close-btn:focus-visible {
+    outline: 2px solid var(--theme-text);
+    outline-offset: 4px;
+    opacity: 1;
+}
+
+/* Ensure the X stays sharp and high-contrast on specific theme colors */
+.theme-3 .close-btn,
+.theme-4 .close-btn,
+.theme-6 .close-btn,
+.theme-7 .close-btn {
+    color: #000000;
+}
+
+.theme-1 .close-btn,
+.theme-2 .close-btn,
+.theme-5 .close-btn,
+.theme-8 .close-btn {
+    color: #ffffff;
 }
 
 .modal-image-container {
@@ -630,8 +713,14 @@ h3,
     margin-top: auto;
     width: 100%;
     background: transparent;
-    padding: 32px 24px;
+    padding: 24px 24px 32px; /* Slightly tighter top padding */
     z-index: 50;
+}
+
+@media (min-width: 800px) {
+    .progress-bar-container {
+        padding-top: 10px; /* Close the gap to the map on desktop */
+    }
 }
 
 .progress-stats {
