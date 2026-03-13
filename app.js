@@ -262,8 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modalDistance.className = "modal-distance valid";
         captureLabel.classList.remove('disabled');
         cameraInput.disabled = false;
-        captureText.textContent = "Capture Imprint";
-        captureIcon.innerHTML = "&#128247;"; // Camera
+        captureText.textContent = "Unlock Imprint";
     }
 
     function disableCapture(msg = "Too far away") {
@@ -271,8 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modalDistance.className = "modal-distance";
         captureLabel.classList.add('disabled');
         cameraInput.disabled = true;
-        captureText.textContent = "Move Closer";
-        captureIcon.innerHTML = "&#128681;"; // Flag/Map pin
+        captureText.textContent = "Seek Imprint";
     }
 
     function openModal(fragment, numStr) {
