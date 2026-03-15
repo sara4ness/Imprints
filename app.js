@@ -13,14 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Array of the images
     // Array of the images
     const fragments = [
-        { id: 1, src: 'images/New images/24B35117-4845-49F9-82AD-8A758E7C5540_1_105_c.JPEG', theme: 5, starAsset: 'star-01.png', clue: 'Seek the contrast in this urban layer.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 2, src: 'images/New images/27E24677-CD6C-4607-841D-88348D7D43F7_1_105_c.jpg', theme: 2, starAsset: 'star-06.png', clue: 'A faded fragment of the past.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 3, src: 'images/New images/3D962933-3591-4B47-B57F-1A9BFC2788FA_1_105_c copy.JPG', theme: 1, starAsset: 'star-05.png', clue: 'Look for overlapping textures.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 4, src: 'images/New images/56E8A5A7-64F3-46CA-B829-A80F99ED6322_1_105_c.jpg', theme: 3, starAsset: 'star-02.png', clue: 'Hidden in plain sight on the street.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 5, src: 'images/New images/A0173217-A2FA-44E0-AC23-103CBBEAE41A_1_105_c.jpg', theme: 8, starAsset: 'star-10.png', clue: 'A splash of color on a grey wall.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 6, src: 'images/New images/IMG_2203 copy.JPG', theme: 7, starAsset: 'star-06.png', clue: 'Detail of layered urban history.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 7, src: 'images/New images/IMG_22031 copy.JPG', theme: 1, starAsset: 'star-06.png', clue: 'Find the hidden geometry in the city.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
-        { id: 8, src: 'images/New images/IMG_3136 copy.JPG', theme: 2, starAsset: 'star-06.png', clue: 'A weathered corner of Denmark Street.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
+        { id: 1, src: 'images/images-new/IMG_2203 copy 2.JPG', theme: 5, starAsset: 'star-01.png', clue: 'Seek the contrast in this urban layer.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
+        { id: 2, src: 'images/images-new/27E24677-CD6C-4607-841D-88348D7D43F7_1_105_c.jpg', theme: 2, starAsset: 'star-06.png', clue: 'A faded fragment of the past.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
+        { id: 3, src: 'images/images-new/3D962933-3591-4B47-B57F-1A9BFC2788FA_1_105_c copy.JPG', theme: 1, starAsset: 'star-05.png', clue: 'Look for overlapping textures.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
+        { id: 4, src: 'images/images-new/56E8A5A7-64F3-46CA-B829-A80F99ED6322_1_105_c.jpg', theme: 3, starAsset: 'star-02.png', clue: 'Hidden in plain sight on the street.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
+        { id: 5, src: 'images/images-new/A0173217-A2FA-44E0-AC23-103CBBEAE41A_1_105_c.jpg', theme: 8, starAsset: 'star-10.png', clue: 'A splash of color on a grey wall.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
+        { id: 6, src: 'images/images-new/IMG_22031 copy 2.JPG', theme: 7, starAsset: 'star-06.png', clue: 'Detail of layered urban history.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
+        { id: 7, src: 'images/images-new/IMG_3136 copy.JPG', theme: 1, starAsset: 'star-06.png', clue: 'Find the hidden geometry in the city.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
         { id: 9, src: 'images/New images/IMG_3140.jpg', theme: 5, starAsset: 'star-01.png', clue: 'Look for this architectural imprint.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
         { id: 10, src: 'images/New images/IMG_3143.jpg', theme: 6, starAsset: 'star-08.png', clue: 'A forgotten mark in the alley.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
         { id: 11, src: 'images/New images/IMG_3144.jpg', theme: 4, starAsset: 'star-03.png', clue: 'A texture that tells a story.', lat: centerLat + randomOffset(), lng: centerLng + randomOffset() },
